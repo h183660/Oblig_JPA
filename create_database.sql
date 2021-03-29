@@ -8,17 +8,17 @@ DROP SCHEMA IF EXISTS oblig_jpa CASCADE;
 CREATE SCHEMA oblig_jpa;
 SET search_path TO oblig_jpa;
 
-CREATE TABLE ansatt
+CREATE TABLE Ansatt
 (
-    ansattid SERIAL UNIQUE NOT NULL,
-    brukernavn VARCHAR(4) UNIQUE NOT NULL,
+    ansattID SERIAL UNIQUE NOT NULL,
+    brukerNavn VARCHAR(4) UNIQUE NOT NULL,
     forNavn VARCHAR(45) NOT NULL,
     etterNavn VARCHAR(45) NOT NULL,
     ansattDato DATE NOT NULL,
     stilling VARCHAR(45) NOT NULL,
-    monedsloon INTEGER NOT NULL,
+    manedslonn INTEGER NOT NULL,
     /*avdeling INTEGER NOT NULL,*/
-    CONSTRAINT ansatt_pk PRIMARY KEY (ansattid)  /*,
+    CONSTRAINT ansatt_pk PRIMARY KEY (ansattID)  /*,
     CONSTRAINT ansatt_fk FOREIGN KEY (avdeling) REFERENCES Avdeling(avdelingsid)*/
 );
 /*
@@ -49,7 +49,7 @@ CONSTRAINT prosjektdeltagelse_pk PRIMARY KEY (prosjektid, ansattid)
 )
 */
 
-INSERT INTO ansatt(brukernavn, forNavn, etterNavn, ansattDato, stilling, monedsloon)
+INSERT INTO ansatt(brukernavn, forNavn, etterNavn, ansattDato, stilling, manedslonn)
 VALUES
        ('lpa', 'Lars-Petter', 'Helland', '2021-05-30', 'JPA-Lærer', 650000),
        ('ga', 'Geir', 'Avheli', '2020-05-30', 'Matte-Lærer', 550000),

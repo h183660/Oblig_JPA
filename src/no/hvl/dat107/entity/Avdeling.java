@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "oblig_JPA")
+@Table(name = "avdeling", schema = "oblig_JPA")
 public class Avdeling {
 
 }
