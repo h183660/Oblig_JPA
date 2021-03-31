@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 import no.hvl.dat107.entity.Ansatt;
+import no.hvl.dat107.entity.Avdeling;
 
 public class AnsattDAO {
 	private EntityManagerFactory emf;
@@ -73,6 +74,24 @@ public class AnsattDAO {
 	}
 
 	/**
+	 * Henter alle ansatte i en avdeling
+	 * 
+	 * @return en liste av Ansatt objekter
+	 */
+	public List<Ansatt> listAlleAnsatteIAvdeling(Avdeling avdeling) {
+		EntityManager em = emf.createEntityManager();
+
+		try {
+			TypedQuery<Ansatt> query = em.createQuery("SELECT a FROM Ansatt a WHERE a.avdeling = :avdeling",
+					Ansatt.class);
+			query.setParameter("avdeling", avdeling);
+			return query.getResultList();
+		} finally {
+			em.close();
+		}
+	}
+
+	/**
 	 * Oppdaterer en ansatt sin lønn i databasen.
 	 * 
 	 * @param ansatt objekt som skal gjøres endringer på.
@@ -113,6 +132,31 @@ public class AnsattDAO {
 
 			Ansatt a = em.find(Ansatt.class, ansatt.getAnsattID());
 			a.setStilling(stilling);
+
+			tx.commit();
+		} catch (Throwable e) {
+			e.printStackTrace();
+			tx.rollback();
+		} finally {
+			em.close();
+		}
+	}
+
+	/**
+	 * Oppdaterer en ansatt sin stilling i databasen.
+	 * 
+	 * @param ansatt    objekt som skal gjøres endringer på.
+	 * @param stilling, som er den nye stillingen til den ansatte
+	 */
+	public void oppdaterAvdeling(Ansatt ansatt, Avdeling avdeling) {
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+
+		try {
+			tx.begin();
+
+			Ansatt a = em.find(Ansatt.class, ansatt.getAnsattID());
+			a.setAvdeling(avdeling);
 
 			tx.commit();
 		} catch (Throwable e) {

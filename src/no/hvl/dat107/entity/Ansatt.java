@@ -1,15 +1,20 @@
 package no.hvl.dat107.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(schema = "oblig_JPA") // kan fjernes så lenge tabellene er i public, og navnet er likt
+@Table(schema = "oblig_JPA")
 public class Ansatt {
 
 	@Id
@@ -22,12 +27,22 @@ public class Ansatt {
 	private String stilling;
 	private int manedslonn;
 
+	@OneToOne(mappedBy = "sjef")
+	private Avdeling avdelingSjef;
+
+	@ManyToOne
+	@JoinColumn(name = "avdeling", referencedColumnName = "avdelingsid")
+	private Avdeling avdeling;
+
+	@OneToMany(mappedBy = "ansatt")
+	private List<ProsjektDeltagelse> deltagelser;
+
 	public Ansatt() {
 
 	}
 
 	public Ansatt(int ansattID, String brukerNavn, String fornavn, String etternavn, LocalDate ansattDato,
-			String stilling, int manedslonn) {
+			String stilling, int manedslonn, Avdeling avdeling) {
 		super();
 		this.ansattID = ansattID;
 		this.brukerNavn = brukerNavn;
@@ -36,6 +51,27 @@ public class Ansatt {
 		this.ansattDato = ansattDato;
 		this.stilling = stilling;
 		this.manedslonn = manedslonn;
+		this.avdeling = avdeling;
+	}
+
+	public void skrivUtMedProsjekter() {
+		System.out.println();
+		System.out.println(toString());
+		for (ProsjektDeltagelse deltagelser : deltagelser) {
+			System.out.println(deltagelser.toString());
+		}
+	}
+
+	public void leggTilProsjektdeltagelse(ProsjektDeltagelse prosjektdeltagelse) {
+		deltagelser.add(prosjektdeltagelse);
+	}
+
+	public void fjernProsjektdeltagelse(ProsjektDeltagelse prosjektdeltagelse) {
+		deltagelser.remove(prosjektdeltagelse);
+	}
+
+	public List<ProsjektDeltagelse> getDeltagelser() {
+		return deltagelser;
 	}
 
 	public int getAnsattID() {
@@ -94,10 +130,18 @@ public class Ansatt {
 		this.manedslonn = manedslonn;
 	}
 
+	public Avdeling getAvdeling() {
+		return avdeling;
+	}
+
+	public void setAvdeling(Avdeling avdeling) {
+		this.avdeling = avdeling;
+	}
+
 	@Override
 	public String toString() {
 		return "Ansatt [ansattid=" + ansattID + ", brukerNavn=" + brukerNavn + ", forNavn=" + forNavn + ", etterNavn="
 				+ etterNavn + ", ansattDato=" + ansattDato + ", stilling=" + stilling + ", manedslonn=" + manedslonn
-				+ "]";
+				+ "avdeling=" + avdeling + "]";
 	}
 }
