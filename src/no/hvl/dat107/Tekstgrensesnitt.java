@@ -355,9 +355,10 @@ public class Tekstgrensesnitt {
 	private void leggTilAvdeling() {
 		Scanner scan = new Scanner(System.in);
 		Avdeling avdeling = new Avdeling();
+		Ansatt sjef = new Ansatt();
 
 		System.out.println("En avdeling må ha en sjef, hva er idnr til sjefen?");
-		Ansatt sjef = finnAnsattMedID();
+		sjef = finnAnsattMedID();
 		avdeling.setSjef(sjef);
 
 		System.out.println("Hva er navnet på avdelingen?");

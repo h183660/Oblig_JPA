@@ -58,6 +58,7 @@ public class AvdelingDAO {
 	 * legger til en ny rad i avdelings tabellen
 	 * 
 	 * @param avdeling-objekt
+	 * @param ansatt-objekt   som skal bli sjef
 	 */
 	public void leggTilAvdeling(Avdeling avdeling, Ansatt sjef) {
 		EntityManager em = emf.createEntityManager();
@@ -65,7 +66,9 @@ public class AvdelingDAO {
 		try {
 			tx.begin();
 
-			em.persist(avdeling); // Oppretter en ny rad i databasen
+			em.persist(avdeling);
+
+			em.merge(sjef).setAvdeling(avdeling);
 
 			tx.commit();
 

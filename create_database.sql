@@ -1,8 +1,3 @@
--- Skript for å opprette databasen og legge inn litt data
-    -- Skjema = hello_jpa
-        -- Tabell(er) = person 
-
--- MERK!!! DROP SCHEMA ... CASCADE sletter alt !!!
 DROP SCHEMA IF EXISTS oblig_jpa CASCADE;
 
 CREATE SCHEMA oblig_jpa;
@@ -54,7 +49,8 @@ VALUES
 ;
 
 ALTER TABLE Avdeling
-ADD CONSTRAINT avdeling_fk FOREIGN KEY (sjef) REFERENCES ansatt(ansattid) ON DELETE RESTRICT
+ADD CONSTRAINT avdeling_fk FOREIGN KEY (sjef)
+    REFERENCES ansatt(ansattid) ON DELETE RESTRICT
 ;
 
 
