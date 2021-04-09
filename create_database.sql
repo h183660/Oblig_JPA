@@ -9,7 +9,6 @@ CREATE TABLE Avdeling
     navn VARCHAR(45) UNIQUE NOT NULL,
     sjef INTEGER NOT NULL,
     CONSTRAINT avdeling_pk PRIMARY KEY (avdelingsid)
-
 );
 
 CREATE TABLE Ansatt
@@ -49,8 +48,7 @@ VALUES
 ;
 
 ALTER TABLE Avdeling
-ADD CONSTRAINT avdeling_fk FOREIGN KEY (sjef)
-    REFERENCES ansatt(ansattid) ON DELETE RESTRICT
+ADD CONSTRAINT avdeling_fk FOREIGN KEY (sjef) REFERENCES ansatt(ansattid) ON DELETE RESTRICT
 ;
 
 
@@ -70,8 +68,8 @@ CREATE TABLE ProsjektDeltagelse
     rolle VARCHAR(45),
     timer INTEGER,
 CONSTRAINT prosjektdeltagelse_pk PRIMARY KEY (prosjektid, ansattid),
-CONSTRAINT prosjektdeltagelse_prosjektid_fk FOREIGN KEY (prosjektid) REFERENCES prosjekt(prosjektid),
-CONSTRAINT prosjektdeltagelse_ansattid_fl FOREIGN KEY (ansattid) REFERENCES ansatt(ansattid)
+CONSTRAINT prosjektdeltagelse_prosjektid_fk FOREIGN KEY (prosjektid) REFERENCES prosjekt(prosjektid) ON DELETE RESTRICT,
+CONSTRAINT prosjektdeltagelse_ansattid_fl FOREIGN KEY (ansattid) REFERENCES ansatt(ansattid) ON DELETE RESTRICT
 )
 ;
 
